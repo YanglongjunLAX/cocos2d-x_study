@@ -76,18 +76,7 @@ HelloWorld::HelloWorld()
     // init physics
     this->initPhysics();
 
-    CCSpriteBatchNode *parent = CCSpriteBatchNode::create("blocks.png", 100);
-    m_pSpriteTexture = parent->getTexture();
-
-    addChild(parent, 0, kTagParentNode);
-
-
-    addNewSpriteAtPosition(ccp(s.width/2, s.height/2));
-
-    CCLabelTTF *label = CCLabelTTF::create("Tap screen", "Marker Felt", 32);
-    addChild(label, 0);
-    label->setColor(ccc3(0,0,255));
-    label->setPosition(ccp( s.width/2, s.height-50));
+    
     
     scheduleUpdate();
 }
@@ -117,8 +106,8 @@ void HelloWorld::initPhysics()
 //     m_debugDraw = new GLESDebugDraw( PTM_RATIO );
 //     world->SetDebugDraw(m_debugDraw);
 
-    uint32 flags = 0;
-    flags += b2Draw::e_shapeBit;
+    //uint32 flags = 0;
+    //flags += b2Draw::e_shapeBit;
     //        flags += b2Draw::e_jointBit;
     //        flags += b2Draw::e_aabbBit;
     //        flags += b2Draw::e_pairBit;
@@ -243,6 +232,7 @@ void HelloWorld::update(float dt)
 void HelloWorld::ccTouchesEnded(CCSet* touches, CCEvent* event)
 {
     //Add a new body/atlas sprite at the touched location
+    /*
     CCSetIterator it;
     CCTouch* touch;
     
@@ -259,6 +249,7 @@ void HelloWorld::ccTouchesEnded(CCSet* touches, CCEvent* event)
         
         addNewSpriteAtPosition( location );
     }
+     */
 }
 
 CCScene* HelloWorld::scene()
