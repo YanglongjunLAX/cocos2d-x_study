@@ -31,12 +31,17 @@ bool GameLayer::init()
 
 	this->initHero();
 
+	
+	this->setTouchEnabled(true);
+
+	this->scheduleUpdate();
+
 	return true;
 }
 
 void GameLayer::initTiledmap()
 {
-	CCTMXTiledMap* _tilemp=CCTMXTiledMap::create("pd_tilemap.tmx");
+	_tilemp=CCTMXTiledMap::create("pd_tilemap.tmx");
 
 	CCObject*  obj=NULL;
 	CCARRAY_FOREACH(_tilemp->getChildren(),obj){
@@ -59,4 +64,45 @@ void GameLayer::initHero()
 	this->_hero->_desiredPosition=this->_hero->getPosition();
 
 	this->_hero->idle();
+}
+
+void GameLayer::ccTouchesBegan(cocos2d::CCSet *pTouches, cocos2d::CCEvent *pEvent)
+{
+	this->_hero->attack();
+}
+void GameLayer::registerWithTouchDispatcher(void)
+{
+	CCDirector::sharedDirector()->getTouchDispatcher()->addStandardDelegate(this,0);  //注册多点触摸
+}
+
+//执行 行走动作
+void GameLayer::didChangeDirectorTo(SimpleDPad* simpleDPad,cocos2d::CCPoint direction)
+{
+	this->_hero->walkWithDirection(direction);
+}
+
+void GameLayer::isHoldingDirector(SimpleDPad* simpleDPad,cocos2d::CCPoint direction)
+{
+	this->_hero->walkWithDirection(direction);
+}
+
+//触摸方向键结束调用的函数
+void GameLayer::simpleDPadTouchEnded(SimpleDPad* simpleDpad)
+{
+	if(this->_hero->_actionState==kActionStateWalk){
+		this->_hero->idle();
+	}
+}
+
+void GameLayer::update(float dt)
+{
+	this->_hero->updateDesiredPosition(dt);
+
+
+	//设置英雄位置
+	float posx=MIN(this->_tilemp->getMapSize().width*this->_tilemp->getTileSize().width-this->_hero->_centerToSides,MAX(this->_hero->_centerToSides,this->_hero->_desiredPosition.x));
+	float posY=MIN(3*this->_tilemp->getTileSize().height+this->_hero->_centerToBottom,MAX(_hero->_centerToBottom,_hero->_desiredPosition.y));
+
+	this->_hero->setPosition(ccp(posx,posY));
+
 }
