@@ -1,5 +1,5 @@
 #pragma once
-#include "d:\cocos2d-2.0-x-2.0.4\cocos2dx\layers_scenes_transitions_nodes\cclayer.h"
+
 #include "cocos2d.h"
 #include "Hero.h"
 #include "SimpleDPad.h"

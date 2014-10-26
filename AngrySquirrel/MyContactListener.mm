@@ -10,23 +10,37 @@ MyContactListener::~MyContactListener(){
 
 void MyContactListener::BeginContact(b2Contact* contact){
 
-  //考虑到b2Contact所传递的数据可能被重用，因此需要拷贝出来
-  MyContact myContact = {contact->GetFixtureA(),contact->GetFixtureB()};
-  contacts.push_back(myContact);
 
 }
 
 void MyContactListener::EndContact(b2Contact* contact){
   
-  MyContact myContact = {contact->GetFixtureA(),contact->GetFixtureB()};
-  std::vector<MyContact>::iterator pos;
-  pos = std::find(contacts.begin(),contacts.end(),myContact);
-  if(pos != contacts.end()){
-    contacts.erase(pos);
-  }
 }
 
 void MyContactListener::PreSolve(b2Contact* contact, const b2Manifold* oldManifold){
 }
 
-void MyContactListener::PostSolve(b2Contact* contact, const b2ContactImpulse* impusle){}
+void MyContactListener::PostSolve(b2Contact* contact, const b2ContactImpulse* impulse){
+    bool isAEnemy = (contact->GetFixtureA()->GetUserData() != NULL);
+    bool isBEnemy = (contact->GetFixtureB()->GetUserData() != NULL);
+    if (isAEnemy || isBEnemy)
+    {
+        // Should the body break?
+        int32 count = contact->GetManifold()->pointCount;
+        
+        float32 maxImpulse = 0.0f;
+        for (int32 i = 0; i < count; ++i)
+        {
+            maxImpulse = b2Max(maxImpulse, impulse->normalImpulses[i]);
+        }
+        
+        if (maxImpulse > 1.0f)
+        {
+            // Flag the enemy(ies) for breaking.
+            if (isAEnemy)
+                contacts.insert(contact->GetFixtureA()->GetBody());
+            if (isBEnemy)
+                contacts.insert(contact->GetFixtureB()->GetBody());
+        }
+    }
+}

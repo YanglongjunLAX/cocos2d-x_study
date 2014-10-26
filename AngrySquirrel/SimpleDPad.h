@@ -1,5 +1,5 @@
 #pragma once
-#include "d:\cocos2d-2.0-x-2.0.4\cocos2dx\sprite_nodes\ccsprite.h"
+
 #include "cocos2d.h"
 
 class SimpleDPad;

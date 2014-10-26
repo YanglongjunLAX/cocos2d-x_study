@@ -1,5 +1,5 @@
 #pragma once
-#include "d:\cocos2d-2.0-x-2.0.4\cocos2dx\sprite_nodes\ccsprite.h"
+
 #include "cocos2d.h"
 
 typedef enum _ActionState{
@@ -24,6 +24,7 @@ public:
 	void dead(); //死亡
 	void walkWithDirection(cocos2d::CCPoint direction);  //行走
 
+	void updateDesiredPosition(float dt);  //计算desiredPosition
 	//动作
 	cocos2d::CCAction* _idleAction;
 	cocos2d::CCAction* _attackAction;

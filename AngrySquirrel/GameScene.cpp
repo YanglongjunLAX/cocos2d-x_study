@@ -5,6 +5,7 @@ USING_NS_CC;
 GameScene::GameScene(void)
 {
 	this->_gameLayer=NULL;
+	this->_hudLayer=NULL;
 }
 
 
@@ -21,6 +22,9 @@ bool GameScene::init()
 	_gameLayer=GameLayer::create();
 
 	this->addChild(_gameLayer);
+
+	this->_hudLayer=HudLayer::create();
+	this->addChild(this->_hudLayer);
 
 	return true;
 }

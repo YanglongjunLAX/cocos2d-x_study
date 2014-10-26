@@ -100,7 +100,7 @@ void SimpleDPad::updateDirectionForTouchLocation(cocos2d::CCPoint location)
 		this->_direction=ccp(-1,-1);
 	}
 	else if(degrees>=157.5&&degrees<=-157.5){
-		this->_direction=ccp(1,1);
+		this->_direction=ccp(-1,0);
 	}
 	else if(degrees<-22.5&&degrees>-67.5){
 		this->_direction=ccp(1,1);

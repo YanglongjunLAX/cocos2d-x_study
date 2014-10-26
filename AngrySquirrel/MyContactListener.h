@@ -1,5 +1,6 @@
 #import "Box2D.h"
 #import <vector>
+#include <set>
 #import <algorithm>
 
 
@@ -15,7 +16,7 @@ struct MyContact{
 
 class MyContactListener: public b2ContactListener{
 public:
-  std::vector<MyContact>contacts;
+  std::set<b2Body*>contacts; 
   
   MyContactListener();
   ~MyContactListener();

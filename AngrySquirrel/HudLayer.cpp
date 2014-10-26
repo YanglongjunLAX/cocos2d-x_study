@@ -1,4 +1,5 @@
 #include "HudLayer.h"
+#include "GameScene.h"
 
 USING_NS_CC;
 
@@ -23,5 +24,18 @@ bool HudLayer::init()
 	this->_dPad->setOpacity(100); //ÉèÖÃÍ¸Ã÷¶È
 	this->addChild(_dPad);
 
+	this->scheduleUpdate();
+
 	return true;
+}
+
+void HudLayer::update(float dt)
+{
+	if((GameScene*)this->getParent() ==NULL){
+		return;
+	}else{
+		this->unscheduleUpdate();
+
+		this->_dPad->_delegate=((GameScene*)this->getParent())->_gameLayer;
+	}
 }
